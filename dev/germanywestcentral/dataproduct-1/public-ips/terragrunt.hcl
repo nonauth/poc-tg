@@ -3,8 +3,8 @@ include {
 }
 
 terraform {
-  // source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-resource-groups"
-  source = "git@github.com:nonauth/poc-tf-modules.git//az-resource-groups?ref=${local.tfmodules_version}"
+  // source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-public-ips"
+  source = "git@github.com:nonauth/poc-tf-modules.git//az-public-ips?ref=${local.tfmodules_version}"
 }
 
 locals {
@@ -32,15 +32,26 @@ locals {
     DataproductVersion = local.dataproduct_version
   }
   
-  resource_groups = {
+  ips = {
     main = {
-      location = local.location
-      tags     = {}
+      allocation_method = "Dynamic"
+      tags              = {}
     }
   }
 }
 
+dependencies {
+  paths = [
+    "../resource-groups",
+  ]
+}
+
+dependency "rg" {
+  config_path = "../resource-groups"
+}
+
 inputs = {
-  resource_groups = local.resource_groups
-  tags            = local.tags
+  resource_group_name = dependency.rg.outputs.rgs.main.name
+  ips                 = local.ips
+  tags                = local.tags
 }

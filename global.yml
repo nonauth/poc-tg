@@ -1,5 +1,5 @@
 ---
-terraform_version: 0.12.29
+terraform_version: 0.13.3
 az_provider_version: 2.28.0
 tags: 
   ManagedBy: Terraform

@@ -1,7 +1,9 @@
 ---
 terraform_version: 0.13.3
 az_provider_version: 2.28.0
+tfmodules_version: master
 resource_group_name: Poc-Terraform-Dev
 storage_account_name: pocterraformdev
 container_name: tfstate-dev
+default_location: germanywestcentral
 tags: {}

@@ -3,8 +3,8 @@ include {
 }
 
 terraform {
-  // source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-resource-groups"
-  source = "git@github.com:nonauth/poc-tf-modules.git//az-resource-groups?ref=${local.tfmodules_version}"
+  // source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-storage-accounts"
+  source = "git@github.com:nonauth/poc-tf-modules.git//az-storage-accounts?ref=${local.tfmodules_version}"
 }
 
 locals {
@@ -32,15 +32,30 @@ locals {
     DataproductVersion = local.dataproduct_version
   }
   
-  resource_groups = {
-    main = {
-      location = local.location
-      tags     = {}
+  storage_accounts = {
+    logs = {
+      azurerm_storage_account = "LRS"
+      account_tier            = "Standard"
+      
+      tags = {
+        Tier = "Logs"
+      }
     }
   }
 }
 
+dependencies {
+  paths = [
+    "../resource-groups",
+  ]
+}
+
+dependency "rg" {
+  config_path = "../resource-groups"
+}
+
 inputs = {
-  resource_groups = local.resource_groups
-  tags            = local.tags
+  resource_group_name = dependency.rg.outputs.rgs.main.name
+  storage_accounts    = local.storage_accounts
+  tags                = local.tags
 }

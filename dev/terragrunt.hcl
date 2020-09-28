@@ -98,5 +98,5 @@ inputs = {
   environment = local.environment
   location    = local.location
   project     = local.project
-  tags        = local.tags
+  common_tags = local.tags
 }

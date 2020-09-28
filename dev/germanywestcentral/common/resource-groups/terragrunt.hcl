@@ -24,16 +24,18 @@ locals {
     "versions.json"
   ])))
   
-  tfmodules_version   = local.versions_config[local.environment]["tfmodules"]["version"]
-  dataproduct_version = local.versions_config[local.environment]["dataproducts"][local.project]["version"]
+  tfmodules_version = local.versions_config[local.environment]["tfmodules"]["version"]
 
   tags = {
-    TFModulesVersion   = local.tfmodules_version
-    DataproductVersion = local.dataproduct_version
+    TFModulesVersion = local.tfmodules_version
   }
   
   resource_groups = {
-    main = {
+    secrets = {
+      location = local.location
+      tags     = {}
+    }
+    network = {
       location = local.location
       tags     = {}
     }

@@ -1,0 +1,35 @@
+{
+    "dev": {
+        "dataproducts": {
+            "dataproduct-1": {
+                "version": "master",
+                "repo": "nonauth/poc-dataproduct-1"
+            }
+        },
+        "tfmodules": {
+            "version": "master"
+        }
+    },
+    "test": {
+        "dataproducts": {
+            "dataproduct-1": {
+                "version": "master",
+                "repo": "nonauth/poc-dataproduct-1"
+            }
+        },
+        "tfmodules": {
+            "version": "master"
+        }
+    },
+    "prod": {
+        "dataproducts": {
+            "dataproduct-1": {
+                "version": "master",
+                "repo": "nonauth/poc-dataproduct-1"
+            }
+        },
+        "tfmodules": {
+            "version": "master"
+        }
+    }
+}
