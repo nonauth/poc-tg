@@ -86,7 +86,13 @@ inputs = {
         version   = "latest"
       }
 
-      admin_username      = "superadmin"
+      os_disk = {
+        caching              = "ReadWrite"
+        storage_account_type = "Premium_LRS"
+        disk_size_gb         = 30
+      }
+
+      admin_username      = local.env_config.default_admin_user
       secret_name         = dependency.ssh.outputs.secrets.main.name
       key_vault_id        = dependency.ssh.outputs.vault.id
       storage_account_uri = dependency.sa.outputs.accounts.logs.primary_blob_endpoint

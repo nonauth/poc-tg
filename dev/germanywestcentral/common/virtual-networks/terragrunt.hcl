@@ -33,7 +33,7 @@ locals {
   virtual_networks = {
     main = {
       location      = local.location
-      address_space = ["10.200.0.0/16"]
+      address_space = local.env_config.vnet[local.location].address_space
       tags          = {}
     }
   }

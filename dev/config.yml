@@ -6,4 +6,11 @@ resource_group_name: Poc-Terraform-Dev
 storage_account_name: pocterraformdev
 container_name: tfstate-dev
 default_location: germanywestcentral
+default_admin_user: superadmin
+vnet:
+  germanywestcentral:
+    address_space:
+      - "10.200.0.0/16"
+    address_prefixes:
+      - "10.200.0.0/24"
 tags: {}

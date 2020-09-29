@@ -46,7 +46,7 @@ inputs = {
     main = {
       resource_group_name  = dependency.vnets.outputs.virtual_networks.main.resource_group_name
       virtual_network_name = dependency.vnets.outputs.virtual_networks.main.name
-      address_prefixes     = ["10.200.0.0/24"]
+      address_prefixes     = local.env_config.vnet[local.location].address_prefixes
     }
   }
   
