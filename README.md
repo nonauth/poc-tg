@@ -7,7 +7,7 @@ az group create \
     --location <location>
 
 az storage account create \
-    --name <account_name>> \
+    --name <account_name> \
     --resource-group <rg_name> \
     --location <location> \
     --sku Standard_RAGRS \

@@ -1,0 +1,16 @@
+---
+terraform_version: 0.13.3
+az_provider_version: 2.28.0
+tfmodules_version: master
+resource_group_name: Poc-Terraform-Test
+storage_account_name: pocterraformtest
+container_name: tfstate-test
+default_location: germanywestcentral
+default_admin_user: superadmin
+vnet:
+  germanywestcentral:
+    address_space:
+      - "10.201.0.0/16"
+    address_prefixes:
+      - "10.201.0.0/24"
+tags: {}
