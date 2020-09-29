@@ -3,8 +3,25 @@ include {
 }
 
 terraform {
-  // source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-vms"
-  source = "git@github.com:nonauth/poc-tf-modules.git//az-vms?ref=${local.tfmodules_version}"
+  source = "${get_parent_terragrunt_dir()}/../../poc-tf-modules//az-vms"
+  // source = "git@github.com:nonauth/poc-tf-modules.git//az-vms?ref=${local.tfmodules_version}"
+
+  before_hook "hook_1" {
+    commands = get_terraform_commands_that_need_vars()
+    execute = [
+      "curl",
+      join("/", [
+        "https://raw.githubusercontent.com",
+        local.dataproduct_repo,
+        local.dataproduct_version,
+        "bootstrap",
+        local.bootstrap_script,
+      ]),
+      "-o",
+      local.bootstrap_script
+    ]
+    run_on_error = false
+  }
 }
 
 locals {
@@ -12,6 +29,7 @@ locals {
   project           = basename(dirname(local.current_dir))
   location          = basename(dirname(dirname(local.current_dir)))
   environment       = basename(dirname(dirname(dirname(local.current_dir))))
+  bootstrap_script  = "bootstrap.sh"
   
   env_config = yamldecode(file(join("/", [
     get_parent_terragrunt_dir(),
@@ -26,6 +44,7 @@ locals {
   
   tfmodules_version   = local.versions_config[local.environment]["tfmodules"]["version"]
   dataproduct_version = local.versions_config[local.environment]["dataproducts"][local.project]["version"]
+  dataproduct_repo    = local.versions_config[local.environment]["dataproducts"][local.project]["repo"]
 
   tags = {
     TFModulesVersion   = local.tfmodules_version
@@ -96,6 +115,8 @@ inputs = {
       secret_name         = dependency.ssh.outputs.secrets.main.name
       key_vault_id        = dependency.ssh.outputs.vault.id
       storage_account_uri = dependency.sa.outputs.accounts.logs.primary_blob_endpoint
+
+      bootstrap_script    = local.bootstrap_script
       
       tags = {
         Tier = "Public"
